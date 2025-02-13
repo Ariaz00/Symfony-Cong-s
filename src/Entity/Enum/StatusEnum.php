@@ -2,12 +2,12 @@
 
 namespace App\Enum;
 
-class StatusEnum
+enum StatusEnum:string
 {
-    const DRAFT = 'DRAFT';
-    const SUBMITTED = 'SUBMITTED';
-    const APPROVED = 'APPROVED';
-    const REJECTED = 'REJECTED';
+    case DRAFT = 'DRAFT';
+    case SUBMITTED = 'SUBMITTED';
+    case APPROVED = 'APPROVED';
+    case REJECTED = 'REJECTED';
 
     public static function getValues(): array
     {

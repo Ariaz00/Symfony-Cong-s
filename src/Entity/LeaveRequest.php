@@ -27,8 +27,11 @@ class LeaveRequest
     #[ORM\Column(length: 255)]
     private ?string $reason = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $status = null;
+    #[ORM\Column(enumType: StatusEnum::class)]
+    private ?StatusEnum $status = null;
+
+    #[ORM\ManyToOne(inversedBy: 'leaveRequests')]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -83,12 +86,12 @@ class LeaveRequest
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): ?StatusEnum
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): static
+    public function setStatus(StatusEnum $status): static
     {
         if (!in_array($status, StatusEnum::getValues())) {
             throw new \InvalidArgumentException('Invalid status');
@@ -96,6 +99,18 @@ class LeaveRequest
 
         $this->status = $status;
         
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $_user): static
+    {
+        $this->user = $_user;
+
         return $this;
     }
 }
