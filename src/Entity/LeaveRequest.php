@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Repository\LeaveRequestRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Enum\StatusEnum;
+use App\Entity\Enum\StatusEnum;
 
 #[ORM\Entity(repositoryClass: LeaveRequestRepository::class)]
 class LeaveRequest
@@ -28,7 +28,7 @@ class LeaveRequest
     private ?string $reason = null;
 
     #[ORM\Column(enumType: StatusEnum::class)]
-    private ?StatusEnum $status = null;
+    private ?StatusEnum $status = StatusEnum::DRAFT;
 
     #[ORM\ManyToOne(inversedBy: 'leaveRequests')]
     private ?User $user = null;
@@ -93,9 +93,7 @@ class LeaveRequest
 
     public function setStatus(StatusEnum $status): static
     {
-        if (!in_array($status, StatusEnum::getValues())) {
-            throw new \InvalidArgumentException('Invalid status');
-        }
+        
 
         $this->status = $status;
         
